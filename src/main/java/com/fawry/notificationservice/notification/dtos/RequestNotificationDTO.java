@@ -12,5 +12,4 @@ public class RequestNotificationDTO {
     private String receiverEmail;
     private String content;
     private Boolean sent;
-    private LocalDateTime createdAt;
 }

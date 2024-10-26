@@ -9,6 +9,7 @@ import com.fawry.notificationservice.notification.repositories.NotificationRepos
 import org.springframework.stereotype.Service;
 import lombok.RequiredArgsConstructor;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 @Service
@@ -21,6 +22,7 @@ public class NotificationServiceImpl implements NotificationService{
     @Override
     public ResponseNotificationDTO createNotification(RequestNotificationDTO requestNotificationDTO) {
         Notification notification = requestNotificationMapper.toNotification(requestNotificationDTO);
+        notification.setCreatedAt(LocalDateTime.now());
         notification = notificationRepository.save(notification);
         return responseNotificationMapper.toResponseNotificationDTO(notification);
     }
@@ -50,9 +52,15 @@ public class NotificationServiceImpl implements NotificationService{
         if(notification == null){
             return null;
         }
-        notification.setReceiverEmail(requestNotificationDTO.getReceiverEmail());
-        notification.setContent(requestNotificationDTO.getContent());
-        notification.setSent(requestNotificationDTO.getSent());
+        if (requestNotificationDTO.getReceiverEmail() != null) {
+            notification.setReceiverEmail(requestNotificationDTO.getReceiverEmail());
+        }
+        if(requestNotificationDTO.getContent() != null) {
+            notification.setContent(requestNotificationDTO.getContent());
+        }
+        if(requestNotificationDTO.getSent() != null) {
+            notification.setSent(requestNotificationDTO.getSent());
+        }
         return responseNotificationMapper.toResponseNotificationDTO(notificationRepository.save(notification));
     }
 }
