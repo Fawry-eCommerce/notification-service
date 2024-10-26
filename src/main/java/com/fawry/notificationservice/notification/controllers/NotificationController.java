@@ -27,7 +27,7 @@ public class NotificationController {
         if(responseNotificationDTO != null) {
             return ResponseEntity.ok(responseNotificationDTO);
         }
-        return (ResponseEntity<ResponseNotificationDTO>) ResponseEntity.badRequest();
+        return ResponseEntity.badRequest().body(null);
     }
 
     @GetMapping("failed")
@@ -45,6 +45,6 @@ public class NotificationController {
         if(responseNotificationDTO != null) {
             return ResponseEntity.ok(responseNotificationDTO);
         }
-        return (ResponseEntity<ResponseNotificationDTO>) ResponseEntity.badRequest();
+        return ResponseEntity.badRequest().body(null);
     }
 }

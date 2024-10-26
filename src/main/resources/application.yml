@@ -19,6 +19,8 @@ spring:
 
 server:
   port: 8006
+  servlet:
+    context-path: /notification-api
 
 eureka:
   client:
