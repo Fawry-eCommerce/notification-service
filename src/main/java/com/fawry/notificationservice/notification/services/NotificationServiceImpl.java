@@ -3,6 +3,7 @@ package com.fawry.notificationservice.notification.services;
 import com.fawry.notificationservice.notification.dtos.RequestNotificationDTO;
 import com.fawry.notificationservice.notification.dtos.ResponseNotificationDTO;
 import com.fawry.notificationservice.notification.entities.Notification;
+import com.fawry.notificationservice.notification.exceptions.NotificationNotFoundException;
 import com.fawry.notificationservice.notification.mappers.RequestNotificationMapper;
 import com.fawry.notificationservice.notification.mappers.ResponseNotificationMapper;
 import com.fawry.notificationservice.notification.repositories.NotificationRepository;
@@ -11,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
@@ -29,7 +31,8 @@ public class NotificationServiceImpl implements NotificationService{
 
     @Override
     public Notification findById(Long id) {
-        return notificationRepository.findById(id).orElse(null);
+
+        return notificationRepository.findById(id).orElseThrow(() -> new NotificationNotFoundException("Notification Not Found"));
     }
 
     @Override
@@ -49,18 +52,9 @@ public class NotificationServiceImpl implements NotificationService{
     @Override
     public ResponseNotificationDTO updateNotificationById(Long id, RequestNotificationDTO requestNotificationDTO) {
         Notification notification = findById(id);
-        if(notification == null){
-            return null;
-        }
-        if (requestNotificationDTO.getReceiverEmail() != null) {
-            notification.setReceiverEmail(requestNotificationDTO.getReceiverEmail());
-        }
-        if(requestNotificationDTO.getContent() != null) {
-            notification.setContent(requestNotificationDTO.getContent());
-        }
-        if(requestNotificationDTO.getSent() != null) {
-            notification.setSent(requestNotificationDTO.getSent());
-        }
+        Optional.ofNullable(requestNotificationDTO.getReceiverEmail()).ifPresent(notification::setReceiverEmail);
+        Optional.ofNullable(requestNotificationDTO.getContent()).ifPresent(notification::setContent);
+        Optional.ofNullable(requestNotificationDTO.getSent()).ifPresent(notification::setSent);
         return responseNotificationMapper.toResponseNotificationDTO(notificationRepository.save(notification));
     }
 }

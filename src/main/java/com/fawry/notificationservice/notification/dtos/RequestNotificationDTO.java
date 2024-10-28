@@ -1,15 +1,20 @@
 package com.fawry.notificationservice.notification.dtos;
 
-import lombok.Builder;
+import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.annotation.Nulls;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
-
-import java.time.LocalDateTime;
 
 @Setter
 @Getter
 public class RequestNotificationDTO {
+    @Email(message = "Email Format is Required")
+    @NotNull(message = "Receiver Email is Required")
     private String receiverEmail;
-    private String content;
-    private Boolean sent;
+    @JsonSetter(nulls = Nulls.SKIP)
+    private String content = "";
+    @JsonSetter(nulls = Nulls.SKIP)
+    private Boolean sent = false;
 }
