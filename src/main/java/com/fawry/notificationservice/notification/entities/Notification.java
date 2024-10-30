@@ -15,9 +15,10 @@ import java.time.LocalDateTime;
 public class Notification {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
-    String receiverEmail;
-    String content;
-    Boolean sent;
-    LocalDateTime createdAt;
+    private Long id;
+    private String receiverEmail;
+    private String subject;
+    private String content;
+    private Boolean sent;
+    private LocalDateTime createdAt;
 }

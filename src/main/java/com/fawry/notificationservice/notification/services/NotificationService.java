@@ -12,4 +12,7 @@ public interface NotificationService {
     List<ResponseNotificationDTO> listFailedNotifications();
     Notification findById(Long id);
     ResponseNotificationDTO updateNotificationById(Long id, RequestNotificationDTO requestNotificationDTO);
+    ResponseNotificationDTO send(RequestNotificationDTO requestNotificationDTO);
+
+    void sendToEmail(ResponseNotificationDTO responseNotificationDTO);
 }
