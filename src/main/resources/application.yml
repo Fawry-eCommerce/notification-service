@@ -2,9 +2,9 @@ spring:
   application:
     name: notification-service
   datasource:
-    url: jdbc:mysql://localhost:3306/notification-db
+    url: jdbc:mysql://localhost:3306/notificationdb
     username: root
-    password: root
+    password: SQL_123basmala
   jpa:
     show-sql: true
     hibernate:
@@ -12,9 +12,27 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQLDialect
+  rabbitmq:
+    queue:
+      json:
+        name: notification-queue
+    exchange:
+      json:
+        name: notification-exchange
+    routing:
+      json:
+        key: notification-routing-key
+#  rabbitmq:
+#    host: localhost
+#    port: 5672
+#    password: guest
+#    username: guest
+
 
 server:
   port: 8006
+  servlet:
+    context-path: /notification-api
 
 eureka:
   client:
