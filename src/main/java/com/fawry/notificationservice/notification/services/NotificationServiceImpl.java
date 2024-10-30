@@ -3,10 +3,10 @@ package com.fawry.notificationservice.notification.services;
 import com.fawry.notificationservice.notification.dtos.RequestNotificationDTO;
 import com.fawry.notificationservice.notification.dtos.ResponseNotificationDTO;
 import com.fawry.notificationservice.notification.entities.Notification;
-import com.fawry.notificationservice.notification.exceptions.NotificationNotFoundException;
 import com.fawry.notificationservice.notification.mappers.RequestNotificationMapper;
 import com.fawry.notificationservice.notification.mappers.ResponseNotificationMapper;
 import com.fawry.notificationservice.notification.repositories.NotificationRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 import lombok.RequiredArgsConstructor;
 
@@ -15,8 +15,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Properties;
 import java.util.stream.Collectors;
-import java.util.Random;
-import java.util.Properties;
 import javax.mail.*;
 import javax.mail.internet.*;
 @Service
@@ -37,7 +35,7 @@ public class NotificationServiceImpl implements NotificationService{
     @Override
     public Notification findById(Long id) {
 
-        return notificationRepository.findById(id).orElseThrow(() -> new NotificationNotFoundException("Notification Not Found"));
+        return notificationRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Notification Not Found"));
     }
 
     @Override
