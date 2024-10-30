@@ -18,12 +18,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("notifications")
 public class JsonQueueController {
     private final RabbitMQJsonProducer rabbitMQJsonProducer;
-    private final RabbitMQJsonConsumer rabbitMQJsonConsumer;
+//    private final RabbitMQJsonConsumer rabbitMQJsonConsumer;
 
-    @PostMapping("send")
-    public ResponseEntity<ResponseNotificationDTO> sendNotification(@Valid @RequestBody RequestNotificationDTO requestNotificationDTO){
+    @PostMapping("/send")
+    public ResponseEntity<String> sendNotification(@Valid @RequestBody RequestNotificationDTO requestNotificationDTO){
         rabbitMQJsonProducer.sendJson(requestNotificationDTO);
-        ResponseNotificationDTO responseNotificationDTO = rabbitMQJsonConsumer.consume(requestNotificationDTO);
-        return ResponseEntity.status(HttpStatus.SC_CREATED).body(responseNotificationDTO);
+        return ResponseEntity.status(HttpStatus.SC_CREATED).body("Notification request has been queued for processing.");
     }
+
 }

@@ -15,8 +15,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Properties;
 import java.util.stream.Collectors;
-import java.util.Random;
-import java.util.Properties;
 import javax.mail.*;
 import javax.mail.internet.*;
 @Service
